@@ -7,7 +7,7 @@ import pandas as pd
 
 
 data_source = 'https://interaktiv.morgenpost.de/corona-virus-karte-infektionen-deutschland-weltweit/data/Coronavirus.current.csv'
-data = pd.read_csv(data_source)
+data = pd.read_csv(data_source, encoding='utf-8')
 country_data = dict()
 city_data = dict()
 pd.set_option('display.max_rows', None)
