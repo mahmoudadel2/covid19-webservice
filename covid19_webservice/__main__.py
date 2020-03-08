@@ -5,7 +5,7 @@ __license__ = "The MIT License (MIT)"
 from covid19_webservice import service
 
 
-ip = '127.0.0.1'
+ip = '0.0.0.0'
 port = 8080
 
 if __name__ == '__main__':
