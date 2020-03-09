@@ -7,16 +7,16 @@ import pandas as pd
 
 
 data_source = 'https://interaktiv.morgenpost.de/corona-virus-karte-infektionen-deutschland-weltweit/data/Coronavirus.current.csv'
-data = pd.read_csv(data_source, encoding='utf-8')
 country_data = dict()
 city_data = dict()
 totals_data = dict()
-pd.set_option('display.max_rows', None)
-pd.set_option('display.max_columns', None)
-pd.set_option('display.width', None)
-pd.set_option('display.max_colwidth', -1)
-data['updated'] = pd.to_datetime(data['updated'], unit='ms')
-data.fillna("Null", inplace=True)
+
+
+def get_data_frame(ds):
+    data = pd.read_csv(ds, encoding='utf-8')
+    data['updated'] = pd.to_datetime(data['updated'], unit='ms')
+    data.fillna("Null", inplace=True)
+    return data
 
 
 def get_country_data(df):

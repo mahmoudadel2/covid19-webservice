@@ -5,7 +5,8 @@ __license__ = "The MIT License (MIT)"
 from covid19_webservice.data import data_processor
 from flask import Flask, json, current_app
 
-df = data_processor.data
+ds = data_processor.data_source
+
 service = Flask(__name__)
 
 
@@ -27,6 +28,7 @@ def service_get_start_page():
 
 @service.route('/get/country/all')
 def service_get_country_data():
+    df = data_processor.get_data_frame(ds)
     return current_app.response_class(
         json.dumps(data_processor.get_country_data(df), indent=4, sort_keys=True, default=str, ensure_ascii=False),
         mimetype="application/json")
@@ -34,6 +36,7 @@ def service_get_country_data():
 
 @service.route('/get/country/name/<country>')
 def service_get_country_data_by_name(country):
+    df = data_processor.get_data_frame(ds)
     return current_app.response_class(
         json.dumps(data_processor.get_country_data(df)[country], indent=4, sort_keys=True, default=str,
                    ensure_ascii=False),
@@ -42,6 +45,7 @@ def service_get_country_data_by_name(country):
 
 @service.route('/get/city/all')
 def service_get_city_data():
+    df = data_processor.get_data_frame(ds)
     response = data_processor.get_city_data(df)
     return current_app.response_class(
         json.dumps(response, indent=4, sort_keys=True, default=str, ensure_ascii=False),
@@ -50,6 +54,7 @@ def service_get_city_data():
 
 @service.route('/get/city/name/<country>/<city>')
 def service_get_city_data_by_name(country, city):
+    df = data_processor.get_data_frame(ds)
     response = data_processor.get_city_data(df)[country][city]
     return current_app.response_class(
         json.dumps(response, indent=4, sort_keys=True, default=str,
@@ -59,6 +64,7 @@ def service_get_city_data_by_name(country, city):
 
 @service.route('/get/statistics/all')
 def service_get_all_statistics():
+    df = data_processor.get_data_frame(ds)
     response = data_processor.get_total_statistics(df)
     return current_app.response_class(
         json.dumps(response, indent=4, sort_keys=True, default=str,
@@ -68,6 +74,7 @@ def service_get_all_statistics():
 
 @service.route('/get/statistics/confirmed')
 def service_get_confirmed():
+    df = data_processor.get_data_frame(ds)
     response = {'confirmed': data_processor.get_total_statistics(df)['confirmed']}
     return current_app.response_class(
         json.dumps(response, indent=4, sort_keys=True, default=str,
@@ -77,6 +84,7 @@ def service_get_confirmed():
 
 @service.route('/get/statistics/recovered')
 def service_get_recovered():
+    df = data_processor.get_data_frame(ds)
     response = {'recovered': data_processor.get_total_statistics(df)['recovered']}
     return current_app.response_class(
         json.dumps(response, indent=4, sort_keys=True, default=str,
@@ -86,6 +94,7 @@ def service_get_recovered():
 
 @service.route('/get/statistics/deaths')
 def service_get_deaths():
+    df = data_processor.get_data_frame(ds)
     response = {'deaths': data_processor.get_total_statistics(df)['deaths']}
     return current_app.response_class(
         json.dumps(response, indent=4, sort_keys=True, default=str,
