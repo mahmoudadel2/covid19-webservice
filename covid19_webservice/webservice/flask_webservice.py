@@ -16,7 +16,7 @@ def gen_service_start_page(service):
             output += '''
             <a href="%s">%s</a>
             <br>
-            ''' % (route, route)
+            ''' % (route, str(route).replace('<', '&lt;').replace('>', '&gt;'))
     return output
 
 
