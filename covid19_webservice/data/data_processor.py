@@ -10,6 +10,7 @@ data_source = 'https://interaktiv.morgenpost.de/corona-virus-karte-infektionen-d
 data = pd.read_csv(data_source, encoding='utf-8')
 country_data = dict()
 city_data = dict()
+totals_data = dict()
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
@@ -67,3 +68,14 @@ def get_city_data(df):
         city_data[entry[0]][entry[1]]['deaths'] = entry[7]
     return city_data
 
+
+def get_total_statistics(df):
+    country_dict = get_country_data(df)
+    totals_data['confirmed'] = 0
+    totals_data['recovered'] = 0
+    totals_data['deaths'] = 0
+    for country in country_dict.keys():
+        totals_data['confirmed'] += country_dict[country]['confirmed']
+        totals_data['recovered'] += country_dict[country]['recovered']
+        totals_data['deaths'] += country_dict[country]['deaths']
+    return totals_data

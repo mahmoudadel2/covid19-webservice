@@ -42,15 +42,25 @@ def api_get_country_data_by_name(country):
 
 @service.route('/get/city/all')
 def api_get_city_data():
+    response = data_processor.get_city_data(df)
     return current_app.response_class(
-        json.dumps(data_processor.get_city_data(df), indent=4, sort_keys=True, default=str, ensure_ascii=False),
+        json.dumps(response, indent=4, sort_keys=True, default=str, ensure_ascii=False),
         mimetype="application/json")
 
 
 @service.route('/get/city/name/<country>/<city>')
 def api_get_city_data_by_name(country, city):
+    response = data_processor.get_city_data(df)[country][city]
     return current_app.response_class(
-        json.dumps(data_processor.get_city_data(df)[country][city], indent=4, sort_keys=True, default=str,
+        json.dumps(response, indent=4, sort_keys=True, default=str,
                    ensure_ascii=False),
         mimetype="application/json")
 
+
+@service.route('/get/statistics/total')
+def api_get_total_statistics():
+    response = data_processor.get_total_statistics(df)
+    return current_app.response_class(
+        json.dumps(response, indent=4, sort_keys=True, default=str,
+                   ensure_ascii=False),
+        mimetype="application/json")
