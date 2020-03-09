@@ -57,9 +57,36 @@ def service_get_city_data_by_name(country, city):
         mimetype="application/json")
 
 
-@service.route('/get/statistics/total')
-def service_get_total_statistics():
+@service.route('/get/statistics/all')
+def service_get_all_statistics():
     response = data_processor.get_total_statistics(df)
+    return current_app.response_class(
+        json.dumps(response, indent=4, sort_keys=True, default=str,
+                   ensure_ascii=False),
+        mimetype="application/json")
+
+
+@service.route('/get/statistics/confirmed')
+def service_get_confirmed():
+    response = {'confirmed': data_processor.get_total_statistics(df)['confirmed']}
+    return current_app.response_class(
+        json.dumps(response, indent=4, sort_keys=True, default=str,
+                   ensure_ascii=False),
+        mimetype="application/json")
+
+
+@service.route('/get/statistics/recovered')
+def service_get_recovered():
+    response = {'recovered': data_processor.get_total_statistics(df)['recovered']}
+    return current_app.response_class(
+        json.dumps(response, indent=4, sort_keys=True, default=str,
+                   ensure_ascii=False),
+        mimetype="application/json")
+
+
+@service.route('/get/statistics/deaths')
+def service_get_deaths():
+    response = {'deaths': data_processor.get_total_statistics(df)['deaths']}
     return current_app.response_class(
         json.dumps(response, indent=4, sort_keys=True, default=str,
                    ensure_ascii=False),
