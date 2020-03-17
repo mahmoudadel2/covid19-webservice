@@ -6,9 +6,7 @@ __license__ = "The MIT License (MIT)"
 import pandas as pd
 
 
-data_source = 'https://interaktiv.morgenpost.de/corona-virus-karte-infektionen-deutschland-weltweit/data/Coronavirus.current.csv'
-country_data = dict()
-city_data = dict()
+data_source = 'https://interaktiv.morgenpost.de/corona-virus-karte-infektionen-deutschland-weltweit/data/Coronavirus.current.v2.csv'
 totals_data = dict()
 
 
@@ -20,6 +18,7 @@ def get_data_frame(ds):
 
 
 def get_country_data(df):
+    country_data = dict()
     country_df = df.loc[df['parent'] == 'global']
     country_raw_data = zip(country_df.label, country_df.updated, country_df.lat, country_df.lon, country_df.confirmed,
                            country_df.recovered, country_df.deaths)
@@ -53,6 +52,7 @@ def get_country_data(df):
 
 
 def get_city_data(df):
+    city_data = dict()
     city_df = df.loc[df['parent'] != 'global']
     city_raw_data = zip(city_df.parent, city_df.label, city_df.updated, city_df.lat, city_df.lon, city_df.confirmed,
                         city_df.recovered, city_df.deaths)
