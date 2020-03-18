@@ -17,19 +17,20 @@ python -m covid19_webservice
 ```
 
 
-## Running on production
+## Running on Heroku
 
 
-### Build an image
-
-```
-docker build -t covid19-webservice .
-```
-
-### Run the container
+### Build an image and push
 
 ```
-docker run -d --name covid19-webservice -p 8080:8080 covid19-webservice
+heroku container:login
+heroku container:push web
+```
+
+### Run the container on Heroku
+
+```
+heroku container:release web
 ```
 
 
