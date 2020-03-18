@@ -33,6 +33,8 @@ heroku container:push web
 heroku container:release web
 ```
 
+You get an app URL from Heroku
+
 
 ## Usage
 
