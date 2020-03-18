@@ -32,21 +32,22 @@ def get_country_data(df):
         country_data[entry[0]]['deaths'] = entry[6]
     city_dict = get_city_data(df)
     for country in city_dict.keys():
-        country_data[country] = dict()
-        counter = 0
-        country_data[country]['confirmed'] = 0
-        country_data[country]['recovered'] = 0
-        country_data[country]['deaths'] = 0
-        for city in city_dict[country].keys():
-            country_data[country]['confirmed'] += city_dict[country][city]['confirmed']
-            country_data[country]['recovered'] += city_dict[country][city]['recovered']
-            country_data[country]['deaths'] += city_dict[country][city]['deaths']
-            if city_dict[country][city]['confirmed'] > counter:
-                counter = city_dict[country][city]['confirmed']
-                top = city
-        country_data[country]['updated'] = city_dict[country][top]['updated']
-        country_data[country]['lon'] = city_dict[country][top]['lon']
-        country_data[country]['lat'] = city_dict[country][top]['lat']
+        if country not in country_data.keys():
+            country_data[country] = dict()
+            counter = 0
+            country_data[country]['confirmed'] = 0
+            country_data[country]['recovered'] = 0
+            country_data[country]['deaths'] = 0
+            for city in city_dict[country].keys():
+                country_data[country]['confirmed'] += city_dict[country][city]['confirmed']
+                country_data[country]['recovered'] += city_dict[country][city]['recovered']
+                country_data[country]['deaths'] += city_dict[country][city]['deaths']
+                if city_dict[country][city]['confirmed'] > counter:
+                    counter = city_dict[country][city]['confirmed']
+                    top = city
+            country_data[country]['updated'] = city_dict[country][top]['updated']
+            country_data[country]['lon'] = city_dict[country][top]['lon']
+            country_data[country]['lat'] = city_dict[country][top]['lat']
 
     return country_data
 
