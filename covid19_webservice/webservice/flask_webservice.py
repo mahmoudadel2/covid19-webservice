@@ -5,6 +5,8 @@ __license__ = "The MIT License (MIT)"
 from covid19_webservice.data import data_processor
 from flask import Flask, json, current_app
 
+from covid19_webservice.webservice import german
+
 ds = data_processor.data_source
 
 service = Flask(__name__)
@@ -36,6 +38,8 @@ def service_get_country_data():
 
 @service.route('/get/country/name/<country>')
 def service_get_country_data_by_name(country):
+    country_english = country
+    country = german.gettext(country_english)
     df = data_processor.get_data_frame(ds)
     return current_app.response_class(
         json.dumps(data_processor.get_country_data(df)[country], indent=4, sort_keys=True, default=str,
