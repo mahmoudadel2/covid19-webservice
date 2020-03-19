@@ -8,7 +8,7 @@ from covid19_webservice.webservice.flask_webservice import service
 
 
 def print_message(message):
-    print '\n\n%s\n\n' % message
+    print('\n\n%s\n\n' % message)
 
 
 def run(ip, port):
