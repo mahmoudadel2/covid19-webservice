@@ -23,13 +23,14 @@ def get_country_data(df):
     country_raw_data = zip(country_df.label, country_df.updated, country_df.lat, country_df.lon, country_df.confirmed,
                            country_df.recovered, country_df.deaths)
     for entry in country_raw_data:
-        country_data[entry[0]] = dict()
-        country_data[entry[0]]['updated'] = entry[1]
-        country_data[entry[0]]['lat'] = entry[2]
-        country_data[entry[0]]['lon'] = entry[3]
-        country_data[entry[0]]['confirmed'] = entry[4]
-        country_data[entry[0]]['recovered'] = entry[5]
-        country_data[entry[0]]['deaths'] = entry[6]
+        country_name = str(entry[0]).lower()
+        country_data[country_name] = dict()
+        country_data[country_name]['updated'] = entry[1]
+        country_data[country_name]['lat'] = entry[2]
+        country_data[country_name]['lon'] = entry[3]
+        country_data[country_name]['confirmed'] = entry[4]
+        country_data[country_name]['recovered'] = entry[5]
+        country_data[country_name]['deaths'] = entry[6]
     city_dict = get_city_data(df)
     for country in city_dict.keys():
         if country not in country_data.keys():
@@ -58,15 +59,17 @@ def get_city_data(df):
     city_raw_data = zip(city_df.parent, city_df.label, city_df.updated, city_df.lat, city_df.lon, city_df.confirmed,
                         city_df.recovered, city_df.deaths)
     for entry in city_raw_data:
-        if entry[0] not in city_data.keys():
-            city_data[entry[0]] = dict()
-        city_data[entry[0]][entry[1]] = dict()
-        city_data[entry[0]][entry[1]]['updated'] = entry[2]
-        city_data[entry[0]][entry[1]]['lat'] = entry[3]
-        city_data[entry[0]][entry[1]]['lon'] = entry[4]
-        city_data[entry[0]][entry[1]]['confirmed'] = entry[5]
-        city_data[entry[0]][entry[1]]['recovered'] = entry[6]
-        city_data[entry[0]][entry[1]]['deaths'] = entry[7]
+        country = str(entry[0]).lower()
+        if country not in city_data.keys():
+            city_data[country] = dict()
+        city = str(entry[1]).lower()
+        city_data[country][city] = dict()
+        city_data[country][city]['updated'] = entry[2]
+        city_data[country][city]['lat'] = entry[3]
+        city_data[country][city]['lon'] = entry[4]
+        city_data[country][city]['confirmed'] = entry[5]
+        city_data[country][city]['recovered'] = entry[6]
+        city_data[country][city]['deaths'] = entry[7]
     return city_data
 
 

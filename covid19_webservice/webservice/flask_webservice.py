@@ -23,6 +23,11 @@ def gen_service_start_page(service):
     return output
 
 
+def translate_and_normalize(original_name):
+    name_english = str(original_name).capitalize()
+    return str(german.gettext(name_english)).lower()
+
+
 @service.route('/')
 def service_get_start_page():
     return gen_service_start_page(service)
@@ -32,17 +37,18 @@ def service_get_start_page():
 def service_get_country_data():
     df = data_processor.get_data_frame(ds)
     return current_app.response_class(
-        json.dumps(data_processor.get_country_data(df), indent=4, sort_keys=True, default=str, ensure_ascii=False),
+        json.dumps(data_processor.get_country_data(df), indent=4, sort_keys=True, default=str,
+                   ensure_ascii=False),
         mimetype="application/json")
 
 
 @service.route('/get/country/name/<country>')
 def service_get_country_data_by_name(country):
-    country_english = country
-    country = german.gettext(country_english)
+    country = translate_and_normalize(country)
     df = data_processor.get_data_frame(ds)
     return current_app.response_class(
-        json.dumps(data_processor.get_country_data(df)[country], indent=4, sort_keys=True, default=str,
+        json.dumps(data_processor.get_country_data(df)[country], indent=4, sort_keys=True,
+                   default=str,
                    ensure_ascii=False),
         mimetype="application/json")
 
@@ -58,6 +64,8 @@ def service_get_city_data():
 
 @service.route('/get/city/name/<country>/<city>')
 def service_get_city_data_by_name(country, city):
+    country = translate_and_normalize(country)
+    city = translate_and_normalize(city)
     df = data_processor.get_data_frame(ds)
     response = data_processor.get_city_data(df)[country][city]
     return current_app.response_class(
