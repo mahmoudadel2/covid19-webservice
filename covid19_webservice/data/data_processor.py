@@ -23,7 +23,7 @@ def get_country_data(df):
     country_raw_data = zip(country_df.label, country_df.updated, country_df.lat, country_df.lon, country_df.confirmed,
                            country_df.recovered, country_df.deaths)
     for entry in country_raw_data:
-        country_name = str(entry[0]).lower()
+        country_name = entry[0].lower()
         country_data[country_name] = dict()
         country_data[country_name]['updated'] = entry[1]
         country_data[country_name]['lat'] = entry[2]
@@ -59,10 +59,10 @@ def get_city_data(df):
     city_raw_data = zip(city_df.parent, city_df.label, city_df.updated, city_df.lat, city_df.lon, city_df.confirmed,
                         city_df.recovered, city_df.deaths)
     for entry in city_raw_data:
-        country = str(entry[0]).lower()
+        country = entry[0].lower()
         if country not in city_data.keys():
             city_data[country] = dict()
-        city = str(entry[1]).lower()
+        city = entry[1].lower()
         city_data[country][city] = dict()
         city_data[country][city]['updated'] = entry[2]
         city_data[country][city]['lat'] = entry[3]

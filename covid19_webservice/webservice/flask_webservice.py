@@ -24,8 +24,8 @@ def gen_service_start_page(service):
 
 
 def translate_and_normalize(original_name):
-    name_english = str(original_name).capitalize()
-    return str(german.gettext(name_english)).lower()
+    name_english = original_name.capitalize()
+    return german.gettext(name_english).lower()
 
 
 @service.route('/')
